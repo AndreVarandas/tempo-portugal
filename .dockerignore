@@ -1,0 +1,9 @@
+./IPMA.Core/bin
+./IPMA.Core/obj
+
+./IPMA.Web/bin
+./IPMA.Web/obj
+
+.git
+.idea
+.DS_Store

@@ -1,0 +1,26 @@
+@page
+@{
+    ViewData["Title"] = "Não encontrado";
+}
+
+<div class="row col-12">
+    <article class="app-not-found">
+        <header>
+            <h1>Ops.</h1>
+            <h2>Não foram encontradas quaisquer previsões!</h2>
+        </header>
+        <img class="app-not-found__img" src="/images/location-point.svg" alt="">
+        <footer class="app-not-found__footer">
+            <a asp-page="/Index" class="btn btn-outline-primary">Por favor pesquise novamente.</a>
+        </footer>
+    </article>
+</div>
+
+<style>
+    .app-not-found {}
+    .app-not-found__img {
+        max-height: 250px;
+        margin: 2rem 0;
+    }
+    .app-not-found__footer {}
+</style>

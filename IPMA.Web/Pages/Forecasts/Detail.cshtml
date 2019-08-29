@@ -1,0 +1,196 @@
+@page
+@model IPMA.Web.Pages.Forecasts.Detail
+
+@{
+    ViewData["Title"] = @Model.LocationDisplayName;
+    ViewData["District"] = @Model.LocationDisplayName;
+}
+
+<div class="container-fluid">
+    <h1>@Model.LocationDisplayName</h1>
+    <div class="app-weather">
+
+        <section class="row">
+            <div class="app-weather-card col-12 col-sm-6 col-md-5">
+                <img class="app-weather-card__icon" src="@Model.CurrentForecast.Icon" alt="">
+                <div class="app-weather-card__weather app-weather-card-weather">
+                    <p class="app-weather-card-weather__temperature">
+                        <span class="app-weather-card-weather__temperature--small">Min.</span>
+                        @Math.Round(Convert.ToDouble(Model.CurrentForecast.MinimumTemperature))º
+                        <span class="app-weather-card-weather__temperature--small">Max.</span>
+                        @Math.Round(Convert.ToDouble(Model.CurrentForecast.MaximumTemperature))º
+                    </p>
+                    <p class="app-weather-card-weather__wind">
+                        <img src="/images/forecast/wind.svg" alt="wind icon">
+                        @Model.CurrentForecast.Wind.WindSpeedDescriptionDailyPt
+                    </p>
+                    <p class="app-weather-card-weather__weather">
+                        @Model.CurrentForecast.Weather.WeatherTypeDescriptionPt
+                    </p>
+                </div>
+            </div>
+
+            <div class="app-weather-details col-12 col-sm-6 col-md-7">
+                <h4>Detalhes</h4>
+                <div class="app-weather-details__item app-weather-details-item">
+                    <img class="app-weather-details-item__image" src="/images/drop.svg" alt="Rainy clouds">
+                    <p class="app-weather-details-item__content">
+                        % @Model.CurrentForecast.RainProbability
+                    </p>
+                </div>
+                <div class="app-weather-details__item">
+                    <img class="app-weather-details-item__image" src="/images/forecast/wind.svg" alt="Wind blowing">
+                    <p class="app-weather-details-item__content">
+                        Direcção do Vento: @Model.CurrentForecast.WindDirection
+                    </p>
+                </div>
+                <div class="app-weather-details__item">
+                    <img class="app-weather-details-item__image" src="/images/location-point.svg" alt="Gps marker">
+                    <p class="app-weather-details-item__content">
+                        Lat: @Model.CurrentForecast.Latitude / Lon: @Model.CurrentForecast.Longitude
+                    </p>
+                </div>
+            </div>
+
+        </section>
+
+        <section class="app-weather-forecast row">
+            <div class="col-12 app-weather-forecast__title">
+                <h4>Próximos dias</h4>
+            </div>
+            @foreach (var forecast in Model.Forecasts)
+            {
+                <article class="col-6 col-md-3">
+
+                    <div class="app-weather-forecast-card">
+                        <div class="app-weather-forecast-card__icon">
+                            <img src="@forecast.Icon" alt="Forecast Icon"/>
+                        </div>
+
+                        <div class="app-weather-forecast-card__description app-weather-forecast-card-description">
+                            <p class="app-weather-forecast-card-description__temperature">
+                                @Math.Round(Convert.ToDouble(forecast.MinimumTemperature))º / @Math.Round(Convert.ToDouble(forecast.MaximumTemperature))º
+                            </p>
+                            <p class="app-weather-forecast-card-description__date">
+                                @forecast.ForecastDate
+                            </p>
+                            <p class="app-weather-forecast-card-description__weather">
+                                @forecast.Weather.WeatherTypeDescriptionPt
+                            </p>
+                        </div>
+
+                    </div>
+                </article>
+            }
+        </section>
+
+        <footer class="row col-12 app-weather-search">
+            <a asp-page="/Index" class="btn btn-outline-primary">Pesquisar Novamente</a>
+        </footer>
+    </div>
+</div>
+
+<style>
+    .app-weather {
+        margin-top: 1rem;    
+    }
+    
+    .app-weather-card {
+        background-color: #e0f3ff;
+        padding: 10px 25px;
+        border-radius: 20px;
+        box-shadow: 0 1px 10px 2px #bbbbbb;
+        display: flex;
+        align-items: center;
+    }
+    
+    .app-weather-card__icon {
+        max-width: 80px;
+    }
+   
+    .app-weather-card__weather {}    
+    .app-weather-card-weather {
+        margin-left: 20px;
+    }
+    .app-weather-card-weather__temperature {
+        font-size: 28px;
+        margin: 1rem 0;
+    }
+    .app-weather-card-weather__temperature--small {
+        font-size: 12px;
+        color: #757575;
+        text-transform: uppercase;
+    }
+    
+    .app-weather-card-weather__wind > img {
+        max-width: 25px;
+        margin-right: 5px;
+    }
+    
+    .app-weather-details {
+        padding-left: 2rem;
+    }
+    
+    .app-weather-details__item {
+        
+    }
+    
+    .app-weather-details-item {}
+    .app-weather-details-item__content {
+        display: inline-block;
+        margin: 0.55rem;
+        color: #757575;
+    }
+    .app-weather-details-item__image {
+        width: 35px;
+    }
+       
+    .app-weather-forecast {
+        margin-top: 2rem;
+    }
+    .app-weather-forecast__title {}
+    
+    .app-weather-forecast-card {}
+    .app-weather-forecast-card__icon {
+        width: 100%;
+        margin-top: 0.35rem;
+    }
+    
+    .app-weather-forecast-card__icon > img {
+        max-width: 35px;
+    }
+        
+    .app-weather-forecast-card-description {
+        color: #757575;
+        font-size: 13px;
+    }
+
+    .app-weather-forecast-card__description {
+
+    }
+    
+    .app-weather-forecast-card-description__temperature {
+        color: black;
+    }
+    
+    .app-weather-forecast-card-description__date,
+    .app-weather-forecast-card-description__temperature,
+    .app-weather-forecast-card-description__weather {
+        margin: 0.35rem 0;
+    }
+    
+    .app-weather-search {
+        margin-top: 2rem;
+    }
+    
+    @@media only screen and (max-width: 575px) {
+      .app-weather-forecast-card {
+         margin: 0.75rem 0;
+      }
+      .app-weather-details {
+          padding-left: 15px;
+          margin-top: 2rem;
+      }
+    }
+    
+</style>

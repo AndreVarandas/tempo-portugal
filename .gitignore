@@ -1,0 +1,10 @@
+bin/
+obj/
+/packages/
+
+# Editor
+.idea
+.vscode
+
+# OSX
+.DS_Store
